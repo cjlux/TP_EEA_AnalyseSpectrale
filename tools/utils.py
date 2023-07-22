@@ -35,7 +35,7 @@ def plot_sig_ech(t_ech, s_ech,
       xlabel: le label de l'axe du temps (defaut: 'Temps [s]')
       ylabel: le label de l'axe Y (défaut: 'Signal [Unité arbitraire]')
     '''
-    if isinstance(t_ech, int) or isinstance(t_ech, float):
+    if isinstance(t_ech, (int, float)):
         Te = t_ech
         t_ech = np.arange(len(s_ech))*Te
     plt.figure(figsize=(8,4))
@@ -58,7 +58,7 @@ def plot_spectre_amplitude(f_ech, spectre, f_max=None,
     Trace les raies du spectre d'amplitude d'un signal discrétisé.
     
     Arguments:
-                 f_ech: le vecteur des fréquences discrètes
+                 f_ech: le pas en fréquence (Delta_F) ou le vecteur des fréquences discrètes
                spectre: le vecteur des amplitude du spectre pour les fréquences discrètes.
                  title: titre du tracé (défaut: "Spectre d'amplitude").
       nb_line_printed: nombre de raies listés sous le graphe (fréquence et amplitude), défaut=0
@@ -67,6 +67,11 @@ def plot_spectre_amplitude(f_ech, spectre, f_max=None,
                         avec la fonction find_harmonics. Valeur par défault: False. 
     '''
     plt.figure(figsize=(8,4))
+    
+    if not isinstance(f_ech, (list, np.ndarray) ):
+        Fe = f_ech
+        f_ech = np.arange(len(spectre))*Fe
+                          
     markerline, stemlines, baseline = plt.stem(f_ech, spectre, basefmt='C0')
     markerline.set_markerfacecolor('white')
     markerline.set_markersize(3.5)
