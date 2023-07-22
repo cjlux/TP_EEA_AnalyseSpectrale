@@ -52,7 +52,7 @@ def plot_sig_ech(t_ech, s_ech,
     
 def plot_spectre_amplitude(f_ech, spectre, f_max=None, 
                            title="Spectre d'amplitude", 
-                           nb_peak_printed=0, 
+                           nb_line_printed=0, 
                            plot_harmonics=False):
     '''
     Trace les raies du spectre d'amplitude d'un signal discrétisé.
@@ -61,8 +61,8 @@ def plot_spectre_amplitude(f_ech, spectre, f_max=None,
                  f_ech: le vecteur des fréquences discrètes
                spectre: le vecteur des amplitude du spectre pour les fréquences discrètes.
                  title: titre du tracé (défaut: "Spectre d'amplitude").
-      nb_peaks_printed: nombre de pics affichés (fréquence et amplitude), défaut=0
-        plot_harmonics: Pour faire tracer les raies harmoniques, if faur donner un couple 
+      nb_line_printed: nombre de raies listés sous le graphe (fréquence et amplitude), défaut=0
+        plot_harmonics: Pour faire tracer les raies harmoniques, if faut donner un couple 
                         (nbre max d'hamoniques, width) dont la signification est donnée 
                         avec la fonction find_harmonics. Valeur par défault: False. 
     '''
@@ -85,15 +85,15 @@ def plot_spectre_amplitude(f_ech, spectre, f_max=None,
         index_harmo, freq_harmo, ampl_harmo  = find_harmonics(spectre, f_ech, nb_harm, width)
         plt.plot(freq_harmo, ampl_harmo, 'xr', label="Harmoniques détectées (ampl. pic)")
         
-    plt.legend()
+    #plt.legend()
     plt.show()
     
-    if nb_peak_printed:
-        if nb_peak_printed >= len(spectre): nb_peak_printed=len(spectre)-1
+    if nb_line_printed:
+        if nb_line_printed >= len(spectre): nb_line_printed=len(spectre)-1
         max_value, max_index = extract_maxima(spectre)
         print("Pics du spectre :")
         f1 = -1
-        for i in max_index[:nb_peak_printed]:
+        for i in max_index[:nb_line_printed]:
             f2 = f_ech[i]
             if f2 > f1 :
                 print(f"\t{f2:10.1f} Hz\t{spectre[i]:8.4f}") 
@@ -172,7 +172,11 @@ def extract_maxima(arr):
     return max_value, max_index
 
 
-def process_periodic_signal(x, Fs, Fe, D, plot_temporal=True, nb_peak_printed=0):
+def process_periodic_signal(x, Fs, Fe, D, 
+                            temporal_plot=True, 
+                            nb_line_printed=0,
+                            temporal_title="Tracé temporel",
+                            spectral_title="Spectre d'amplitude"):
     '''
     - Calcule le vecteur des temps discrets,
     - Trace l'allure temporelle du signal discrétisé
@@ -185,9 +189,11 @@ def process_periodic_signal(x, Fs, Fe, D, plot_temporal=True, nb_peak_printed=0)
       Fs: fréquence du signal x en Hertz.
       Fe: fréquence d'échantilonnage en Hertz.
       D : durée de l'échantillonnage en secondes. 
-      nb_peaks_printed: nombre de pics affichés (fréquence et amplitude), défaut=0
+      nb_line_printed: nombre de raies listées sous le graphe (fréquence et amplitude), défaut=0
+      temporal_title: titre du tracé temporel
+      spectral_title: titre du tracé du spectre
     
-    Retrour:
+    Retour:
       renvoie t_ech, x_ech, f_ech, A
         t_ech: vecteur des instants d'échantillonnage
         x_ech: vecteur des valeur du signal échantillonné
@@ -201,8 +207,8 @@ def process_periodic_signal(x, Fs, Fe, D, plot_temporal=True, nb_peak_printed=0)
     N = len(t_ech)
     x_ech = x(t_ech, Ts)            # calcul du signal pour les temps échantillonnés
     
-    if plot_temporal:
-        plot_sig_ech(t_ech, x_ech)
+    if temporal_plot:
+        plot_sig_ech(t_ech, x_ech, temporal_title)
 
     X  = rfft(x_ech)          # FFT du signal => X est à avaleurs complexes
     A = 2*np.absolute(X)/N    # spectre d'amplitude = module de la FFT
@@ -210,7 +216,7 @@ def process_periodic_signal(x, Fs, Fe, D, plot_temporal=True, nb_peak_printed=0)
     
     f_ech = np.arange(0, len(X))*delta_f   # vecteurs des points en fréquence
     f_ech[-1]
-    plot_spectre_amplitude(f_ech, A, nb_peak_printed=nb_peak_printed)
+    plot_spectre_amplitude(f_ech, A, nb_line_printed=nb_line_printed, title=spectral_title)
     
     print(f"le pas en fréquence est : {delta_f:8.3} Hz")
     
