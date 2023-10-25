@@ -9,7 +9,7 @@ Les TP sont prévus pour être faits par des étudiants de l'ENSAM, qui disposen
 Pour le TP `Synthèse de Fourier`, il faut installer le module __simpleaudio__:<br>
 Dans la _console anaconda_, avec l'EVP __minfo__ activé, taper :
 
-    pip install minfo
+    pip install simpleaudio
 
 
 
