@@ -1,5 +1,5 @@
 #
-# v1.1 Juin  2023, by JLC
+# v1.2 November 2023, by JLC
 #
 
 import numpy as np
@@ -7,17 +7,6 @@ from numpy.fft import rfft    # rfft : FFT d'un signal réel
 import scipy
 import matplotlib.pyplot as plt
 from math import sqrt
-
-import simpleaudio as sa
-
-def play(WAV_file):
-    '''
-    Plays the sound of the given WAV file.
-    '''
-    wave_obj = sa.WaveObject.from_wave_file(WAV_file)
-    play_obj = wave_obj.play()
-    play_obj.wait_done()  # Wait until sound has finished playing
-    
     
     
 def plot_sig_ech(t_ech, s_ech, 
