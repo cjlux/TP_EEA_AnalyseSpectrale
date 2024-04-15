@@ -6,7 +6,7 @@ Deux TP sont disponibles :
 
 Les TP sont prévus pour être faits par des étudiants de l'ENSAM, qui disposent déjà sur leurs ordinateurs portables d'un _Environnement Virtuel Python_ (EVP) nommé __minfo__, utilisé pour les cours de Math-Info à l'ENSAM.
 
-Pour ce TP `Synthèse de Fourier`, l'installation du module Python __simpleaudio__ est détaillée dans le notebook.
+Pour le TP `Synthèse de Fourier`, l'installation du module Python __simpleaudio__ est détaillée au début du deuxième notebook.
 
 
 

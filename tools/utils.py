@@ -10,9 +10,10 @@ from math import sqrt
     
     
 def plot_sig_ech(t_ech, s_ech, 
-                 title='Signal discrétisé', 
-                 xlabel='Temps [s]',
-                 ylabel='Signal [Unité arbitraire]'):
+                 x_lim = None,
+                 title = 'Signal discrétisé', 
+                 xlabel = 'Temps [s]',
+                 ylabel ='Signal [Unité arbitraire]'):
     '''
     Trace les barres verticales montrant l'amplitude du signal aux temps échantillonnés.
     
@@ -20,6 +21,7 @@ def plot_sig_ech(t_ech, s_ech,
       t_ech: le vecteur [t_0, t_1... t_N-1] des N instants d'échantillonnage du signal
              ou la période d'échantilonnage.
       s_ech: le vecteur [s(t_0), s(t_1)...] des valeurs du signal s aux temps échantillonnés
+      x_lim: tuple (xmin, xmax) des valeurs min et max de l'axe des abscisses 
       title: titre du tracé (défaut: 'Signal discrétisé').
       xlabel: le label de l'axe du temps (defaut: 'Temps [s]')
       ylabel: le label de l'axe Y (défaut: 'Signal [Unité arbitraire]')
@@ -37,6 +39,7 @@ def plot_sig_ech(t_ech, s_ech,
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
+    if x_lim: plt.xlim(x_lim)
     plt.show()
     
 def plot_spectre_amplitude(f_ech, spectre, f_max=None, 
